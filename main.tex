@@ -1,0 +1,91 @@
+\documentclass[]{spie}  %>>> use for US letter paper
+%\documentclass[a4paper]{spie}  %>>> use this instead for A4 paper
+%\documentclass[nocompress]{spie}  %>>> to avoid compression of citations
+
+\renewcommand{\baselinestretch}{1.0} % Change to 1.65 for double spacing
+ 
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Lynx grating spectrometer design: Optimizing chirped gratings}
+
+\author[a]{Hans Moritz G\"unther}
+\author[a,b]{Ralf K. Heilmann}
+\affil[a]{MIT Kavli Institute for Astrophysics and Space Research, Massachusetts Institute of Technology, Cambridge, MA 02139, USA}
+\affil[b]{Space Nanotechnology Laboratory, Massachusetts Institute of Technology, Cambridge, MA 02139, USA}
+
+\authorinfo{Send correspondence to H.M.G. (E-mail: hgunther@mit.edu)}
+
+% Option to view page numbers
+\pagestyle{empty} % change to \pagestyle{plain} for page numbers   
+\setcounter{page}{301} % Set start page numbering at e.g. 301
+ 
+\begin{document} 
+\maketitle
+
+\begin{abstract}
+Lynx is one of four concept studies for NASA's 2020 decadal survey. The design reference mission includes an X-ray grating spectrometer (XGS) based on critical angle transmission (CAT) gratings. In the past we studied different grating sizes and arrangements using traditional flat CAT gratings with constant bar spacing. However, new technology development brings chirped gratings in reach. Using chirped gratings where the grating bar spacing varies over a grating allows us to fill the aperture with larger gratings because the chirp can compensate for some aberrations caused by the deviation of large flat gratings from the Rowland torus. This reduces the area blocked by grating support structures. Using larger gratings also carries potential cost savings.
+We use ray-tracing to study an XGS design with chirped grating to derive alignment tolerances and maximal size of the gratings used to stay within the Lynx requirements for effective area and resolving power. We find that using chirped gratings of $80 * 160$~mm size allows us to reduce the number of gratings from over 5000 to about 500, while simultaneously increasing the effective area by 25\% and keeping the resolving power constant.
+
+\end{abstract}
+
+% Include a list of keywords after the abstract 
+\keywords{ray-tracing, X-ray, Lynx, CAT (critical angle transmission), spectroscopy}
+
+\section{INTRODUCTION}
+\label{sec:intro}
+High resolution X-ray spectroscopy is a well-established method to study a wide variety of phenomena in the high-energy universe from early phases of star formation to the outflows of massive black holes in the center of far away galaxies. Often, high-resolution X-ray spectroscopy can reveal information than cannot be obtained by any other method. For example, the density of the accretion shock in young stars can only be measured in He-like triplets of O~{\sc vii} and Ne~{\sc ix}, located around 21 and 13~\AA{}, respectively. Despite great advances in X-ray microcalorimeters, only diffraction gratings can deliver a resolving power $> 1000$ in the soft X-ray band.
+
+In preparation for the 2020 Decadal survey, NASA organized a detailed study of four surveyors-type missions, one of them focussed on the X-ray band, called ``Lynx''\cite{gaskin}. The design
+reference mission (DRM) for Lynx includes a mirror with a 2~m$^2$ collecting area at
+1~keV and a Point-spread-function (PSF) of 0.5~arcsec half-power-diameter
+(HPD). Lynx would have two instruments at the focal point with different field-of-view and energy resolution (High-Definition X-ray Imager
+(HDXI)\cite{HDXI} or microcalorimeter\cite{MICROCAL}) and tractable gratings that can be inserted into the beam to diffract photons to a separate detector (X-ray grating spectrometer - XGS). While reflection gratings have been considered\cite{OPXGS}, they are fundamentally limited in resolving power\cite{2020ApJ...897...92D} and the DRM relies on critical angle transmission (CAT) gratings.
+
+The design, hardware requirements, and predicted performance of the XGS in the DRM is described in detail in Ref.~\citenum{CATXGS}; in the same reference we also explain the setup of our ray-trace simulations. In section~\ref{sect:raytrace} we present a short summary of the setup, but refer the reader to Ref.~\citenum{CATXGS} for more details. 
+
+The goal of this paper is to study a scenario in detail that was only briefly mentioned in Ref.~\citenum{CATXGS}: CAT gratings with a ``chirp'', i.e.\ a spatially variable grating period $d$. We discuss the motivation to use chirped gratings in section~\ref{sect:motivation} before we go into results for ray-traces with chirped gratings (section~\ref{sect:chirp}). In principle, one could combine a chirp with physically bending the gratings, but we demonstrate in section~\ref{sect:bend} that the added benefit is small and does not justify the added complexity. We end with a summary in section~\ref{sect:summary}.
+
+\section{SETUP FOR RAY-TRACES}
+\label{sect:raytrace}
+Our simulations are based on a geometric ray-trace, which follows
+individual rays through the system from the entrance aperture to the
+detector. Simulations are performed with MARXS
+1.2\cite{marxs,marxs1.2}, which is written in Python and lincensed
+under the GNU license v3. It is available on
+github\footnote{\url{https://github.com/chandra-marx/marxs}}. Code specific to the Lynx XGS and the analysis shown in this article is also available\footnote{\url{https://github.com/hamogu/marxs-lynx}}; we
+used the version with commit hash 13b10be. 
+
+The setup is described in detail in Ref.~\citenum{CATXGS}. In addition, improvements on the treatment of the grating support structures, which act as diffraction gratings themselves, are described in \cite{10.1117/12.2525814}. For the analysis here, we assume that the parameters of the grating bar support structures do not depend on the size of the grating, i.e.\ that larger gratings do not require any thicker support structures than we assumed for the $50*50$~mm gratings discussed in Ref.~\citenum{CATXGS}.
+
+The CAT gratings for the Lynx XGS are developed at the
+MIT Space Nanotechnology Laboratory
+\cite{Heilmann:11,doi:10.1117/12.2188525,10.1117/12.2314180,10.1117/12.2529354}. The high aspect-ratio grating bars are
+5.7~$\mu$m deep and supported by an L1 support structure running
+perpendicular to the grating bars themselves and the entire membrane
+(bars and L1) is mechanically stabilized by a hexagonal L2 support
+structure, which is 0.5~mm deep. 
+A preliminary structural analysis indicates that changes in the shape of the L1 and L2 support structures could actually be used to reduce the thickness and covering fraction of the support structures compared to the current design, so our assumption that the L1 bars and L2 hexagons currently planned work for larger gratings as well seems reasonable for this early stage of the spectrograph design.
+Absorption and diffraction of photons
+by the L1 and L2 support structures is included in our
+simulations. The grating membrane is surrounded by a narrow solid Si frame. We also explore if bending the gratings into the shape of a cylinder (with the axis of the cylinder parallel to the grating bars) can further improve performance. Smaller gratings with bars 4.0~$\mu$m deep and side of $10 * 30$~mm have been bend in the laboratory and where found to maintain grating efficiency with no obvious mechanical damage\cite{10.1117/12.2274205}.
+
+
+\acknowledgments % equivalent to \section*{ACKNOWLEDGMENTS}
+Support
+for this work was provided in part through NASA grant NNX17AG43G and
+Smithsonian Astrophysical Observatory (SAO) contract SV3-73016 to MIT
+for support of the {\em Chandra} X-Ray Center (CXC), which is operated
+by SAO for and on behalf of NASA under contract NAS8-03060.  The
+simulations make use of Astropy, a community-developed core Python
+package for Astronomy\cite{astropy1,astropy2}, numpy\cite{numpy}, and
+IPython\cite{IPython}. Displays are done with mayavi\cite{mayavi} and
+matplotlib\cite{matplotlib}.
+
+
+% References
+\bibliography{report} % bibliography data in report.bib
+\bibliographystyle{spiebib} % makes bibtex use spiebib.bst
+
+\end{document} 
